@@ -54,8 +54,13 @@ class CompetitiveCompanionServer:
 class FastOlympicCodingHookCommand(sublime_plugin.TextCommand):
     def run(self, edit):
         try:
+            file_name = self.view.file_name()
             _thread.start_new_thread(CompetitiveCompanionServer.startServer,
-                                     (self.view.file_name(),
+                                     (file_name,
                                       sublime.load_settings("FastOlympicCoding.sublime-settings")))
+            if file_name:
+                sublime.status_message("Listening for Competitive Companion: " + path.basename(file_name))
+            else:
+                sublime.status_message("Listening for Competitive Companion.")
         except Exception as e:
             print("Error: unable to start thread - " + str(e))
