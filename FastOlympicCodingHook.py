@@ -31,8 +31,10 @@ def MakeHandlerClassFromFilename(file_full_path, tests_relative_dir, tests_file_
                 print("New test case path: " + nfilename)
                 with open(nfilename, "w") as f:
                     f.write(json.dumps(ntests))
+                sublime.status_message("Sample fetched successfully: " + path.basename(nfilename))
             except Exception as e:
                 print("Error handling POST - " + str(e))
+                sublime.status_message("Failed to fetch samples.")
             threading.Thread(target=self.server.shutdown, daemon=True).start()
     return HandleRequests
 
